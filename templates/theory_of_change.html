@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Public Issue Resolution Dashboard</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body>
+        <header>
+            <img src="{{ url_for('static', filename='assets/IA_Logo_Horizontal_negative.png') }}" alt="IA Logo" id="ia-logo">
+            <nav>
+                <a href="/">Dashboard</a>
+                <a href="/kanban">Kanban Board</a>
+                <a href="/theory_of_change">Theory of Change</a>
+                <a href="/project_data">Project Data</a> <!-- New link -->
+            </nav>
+            <a href="https://www.integrityaction.org" id="visit-button" target="_blank">
+                Visit IntegrityAction.org
+                <img src="{{ url_for('static', filename='assets/IA_Icons_External_Link.png') }}" alt="External Link Icon">
+            </a>
+        </header>
+    <main>
+        <img src="{{ url_for('static', filename='assets/carbontoc.png') }}" alt="Theory of Change" style="max-width: 100%; height: auto;">
+    </main>
+</body>
+</html>

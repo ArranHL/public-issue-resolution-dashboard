@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Management Kanban Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/kanban.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='assets/IA_Logo_Horizontal_negative.png') }}" alt="IA Logo" id="ia-logo">
+        <nav>
+            <a href="/">Dashboard</a>
+            <a href="/kanban">Kanban Board</a>
+            <a href="/theory_of_change">Theory of Change</a>
+            <a href="/project_data">Project Data</a> <!-- New link -->
+        </nav>
+        <a href="https://www.integrityaction.org" id="visit-button" target="_blank">
+             IntegrityAction.org
+            <img src="{{ url_for('static', filename='assets/IA_Icons_External_Link.png') }}" alt="External Link Icon">
+        </a>
+    </header>
+  
+    <div id="filter-sort-container">
+        
+        <input type="text" id="search-input" placeholder="Search issues...">
+    
+        <select id="severity-filter">
+            <option value="">All Severities</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+        
+        <select id="timeframe-filter">
+            <option value="">All Timeframes</option>
+            <option value="immediate">Immediate</option>
+            <option value="short">Short</option>
+            <option value="long">Long</option>
+        </select>
+
+        <!-- Add date inputs -->
+        <input type="date" id="start-date" placeholder="Start Date">
+        <input type="date" id="end-date" placeholder="End Date">
+
+    
+        <button id="apply-filters">Apply Filters</button>
+        <button id="reset-filters">Reset Filters</button>
+    </div>
+    
+    <main id="kanban-board">
+        <div class="column" id="new-issues">
+            <h2>New</h2>
+            <div class="issue-list" id="new-list"></div>
+        </div>
+
+        <div class="column" id="open-issues">
+            <h2>Open</h2>
+            <div class="issue-list" id="open-list"></div>
+        </div>
+        <div class="column" id="waiting-issues">
+            <h2>Waiting</h2>
+            <div class="issue-list" id="waiting-list"></div>
+        </div>
+        <div class="column" id="fixed-issues">
+            <h2>Fixed</h2>
+            <div class="issue-list" id="fixed-list"></div>
+        </div>
+    </main>
+
+    <!-- Issue Details Modal -->
+    <div id="kanban-issue-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="kanban-modal-issue-details"></div>
+            <h3 class="carousel-title">Issue History</h3>
+            <div id="kanban-response-carousel" class="carousel">
+                <div class="carousel-content"></div>
+                <button class="carousel-prev">&#10094;</button>
+                <button class="carousel-next">&#10095;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/kanban.js') }}"></script>
+    <!-- Add this to your HTML files (e.g., index.html) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io();
+        socket.on('data_updated', function(data) {
+            console.log(data.message);
+            // Add code to refresh data on the client side
+        });
+    </script>
+</body>
+</html>

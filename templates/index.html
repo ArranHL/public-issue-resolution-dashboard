@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Public Issue Resolution Dashboard</title>
+    
+    <!--<title>Public Issue Resolution Dashboard</title> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo-subtitle-container">
+            <img src="{{ url_for('static', filename='assets/IA_Logo_Horizontal_negative.png') }}" alt="IA Logo" id="ia-logo">
+            <h1 class="subtitle">      Carbon Integrity Monitors</h1>
+        </div>
+        <nav>
+            <a href="/">Dashboard</a>
+            <a href="/kanban">Kanban Board</a>
+            <a href="/theory_of_change">Theory of Change</a>
+            <a href="/project_data">Project Data</a>
+        </nav>
+        <a href="https://www.integrityaction.org" id="visit-button" target="_blank">
+             IntegrityAction.org
+            <img src="{{ url_for('static', filename='assets/IA_Icons_External_Link.png') }}" alt="External Link Icon">
+        </a>
+    </header>
+
+    <main>
+        <!-- Map container -->
+        <div id="map"></div>
+
+        <!-- Dashboard Container -->
+        <div id="dashboard-container">
+            <div id="filter-container">
+                <input type="text" id="search-input" placeholder="Search...">
+                <select id="state-filter">
+                    <option value="">All States</option>
+                    <option value="new">New</option>
+                    <option value="open">Open</option>
+                    <option value="waiting">Waiting</option>
+                    <option value="fixed">Fixed</option>
+                </select>
+            
+                <select id="severity-filter">
+                    <option value="">All Severities</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <select id="timeframe-filter">
+                    <option value="">All Timeframes</option>
+                    <option value="immediate">Immediate</option>
+                    <option value="short">Short</option>
+                    <option value="long">Long</option>
+                </select>
+                <!-- date inputs -->
+                <input type="date" id="start-date" placeholder="Start Date">
+                <input type="date" id="end-date" placeholder="End Date">
+            
+
+                <button id="apply-filters">Apply Filters</button>
+                <button id="reset-filters">Reset Filters</button>
+            </div>
+            
+
+            <div id="issues-container">
+                <h2>Reported Issues (<span id="issue-count">0</span>)</h2>
+                <div id="issues-list">
+                    <!-- Issue card structure -->
+                    <div class="issue-card">
+                        <img src="{{ url_for('static', filename='assets/issue1.jpg') }}" alt="Issue Image" class="issue-image">
+                        <div class="issue-content">
+                            <h3>Issue Title</h3>
+                            <div class="issue-divider"></div>
+                            <p>Issue description</p>
+                            <div class="issue-divider"></div>
+                            <p><strong>Additional Info:</strong> More details</p>
+                        </div>
+                    </div>
+                    <!-- Add more issue cards as needed -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- Issue Details Modal -->
+    <div id="issue-modal" class="modal">
+        <div id="modal-content" class="modal-content">
+            <span class="close-modal">&times;</span>
+            <!-- Modal content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- JavaScript for Map and Functionality -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script type="text/javascript">
+        var socket = io();
+        socket.on('data_updated', function(data) {
+            console.log(data.message);
+            // Add code to refresh data on the client side
+        });
+    </script>
+</body>
+</html>
